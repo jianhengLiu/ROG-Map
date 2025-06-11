@@ -16,30 +16,23 @@ set(CMAKE_CXX_FLAGS_DEBUG "-O0 -Wall -g  -fPIC")
 add_compile_options(-DQT_NO_VERSION_TAGGING)
 add_definitions(-DROOT_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/\")
 
-find_package(catkin REQUIRED)
-
 find_package(Eigen3 REQUIRED)
 find_package(PCL REQUIRED)
 # find_package(cuda REQUIRED)
 
 set(CUDA_SEPARABLE_COMPILATION ON)
 
-catkin_package(
-  INCLUDE_DIRS include LIBRARIES rog_map CATKIN_DEPENDS
-  # roscpp rospy std_msgs DEPENDS system_lib
-)
 
 include_directories(
   SYSTEM
   include
   ../../../devel/include
-  ${catkin_INCLUDE_DIRS}
   ${Eigen3_INCLUDE_DIRS}
   ${PCL_INCLUDE_DIRS}
   ${CUDA_INCLUDE_DIRS}
   ${CUDA_cudadevrt_LIBRARY})
 
-set(THIRD_PARTY ${catkin_LIBRARIES} ${PCL_LIBRARIES} -ldw)
+set(THIRD_PARTY ${PCL_LIBRARIES} -ldw)
 
 file(GLOB_RECURSE rogmap_cuda_srcs CONFIGURE_DEPENDS src/rog_map_cuda/*.cu
      include/rog_map_cuda/*.cuh)
