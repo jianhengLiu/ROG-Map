@@ -4,14 +4,9 @@ project(rog_map LANGUAGES CXX CUDA)
 add_compile_options(-std=c++14)
 set(CMAKE_BUILD_TYPE "Release")
 # set(CMAKE_BUILD_TYPE "Debug")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -Wall -g -fPIC")
-set(CMAKE_CXX_FLAGS_DEBUG "-O0 -Wall -g  -fPIC")
-# set(CMAKE_CUDA_FLAGS_RELEASE
-#     "${CMAKE_CUDA_FLAGS} -rdc=true -lcudadevrt -gencode arch=compute_75,code=sm_75 "
-# ) # -gencode arch=compute_87,code=sm_87
-# set(CMAKE_CUDA_FLAGS_DEBUG
-#     "${CMAKE_CUDA_FLAGS} -G -rdc=true -lcudadevrt -gencode arch=compute_75,code=sm_75"
-# ) # -gencode arch=compute_87,code=sm_87
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CUDA_FLAGS} -O3 -Wall -g -fPIC")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CUDA_FLAGS} -O0 -Wall -g  -fPIC")
+set(CMAKE_CUDA_FLAGS "${CMAKE_CUDA_FLAGS} -rdc=true")
 
 add_compile_options(-DQT_NO_VERSION_TAGGING)
 add_definitions(-DROOT_DIR=\"${CMAKE_CURRENT_SOURCE_DIR}/\")
@@ -38,6 +33,8 @@ file(GLOB_RECURSE rogmap_cuda_srcs CONFIGURE_DEPENDS src/rog_map_cuda/*.cu
      include/rog_map_cuda/*.cuh)
 add_library(rog_map_cuda ${rogmap_cuda_srcs})
 
-set_target_properties(rog_map_cuda PROPERTIES CUDA_SEPARABLE_COMPILATION ON)
+set_target_properties(rog_map_cuda PROPERTIES 
+    CUDA_SEPARABLE_COMPILATION ON
+    CUDA_RESOLVE_DEVICE_SYMBOLS ON)
 
-target_link_libraries(rog_map_cuda ${THIRD_PARTY})
+target_link_libraries(rog_map_cuda ${THIRD_PARTY} ${CUDA_cudadevrt_LIBRARY})
