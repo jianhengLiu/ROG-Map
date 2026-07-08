@@ -27,7 +27,7 @@ include_directories(
   ${CUDA_INCLUDE_DIRS}
   ${CUDA_cudadevrt_LIBRARY})
 
-set(THIRD_PARTY ${PCL_LIBRARIES} -ldw)
+set(THIRD_PARTY ${PCL_LIBRARIES})
 
 file(GLOB_RECURSE rogmap_cuda_srcs CONFIGURE_DEPENDS src/rog_map_cuda/*.cu
      include/rog_map_cuda/*.cuh)

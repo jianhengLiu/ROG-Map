@@ -39,7 +39,7 @@
 
 #include <PointCloudCuda/point_types.h>
 #include <PointCloudCuda/thrust.h>
-#include <pcl/make_shared.h>
+#include <memory>
 
 namespace pcl
 {
@@ -197,8 +197,8 @@ namespace pcl
         /** \brief True if no memory has been allocated. */
         bool allocated = false;
   
-        using Ptr = shared_ptr<PointCloudSOA>;
-        using ConstPtr = shared_ptr<const PointCloudSOA>;
+        using Ptr = std::shared_ptr<PointCloudSOA>;
+        using ConstPtr = std::shared_ptr<const PointCloudSOA>;
     };          
 
   } // namespace
